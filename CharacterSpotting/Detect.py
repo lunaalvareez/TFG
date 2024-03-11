@@ -1,42 +1,48 @@
 import cv2
 import numpy as np
-import matplotlib.pyplot as plt
+import torch
 import GlobalConstants as paths
+import Yolov8Model as Yolov8Model
+
+weights_file = "yolov8_weights.pt"
+model = Yolov8Model.YOLOv8()
+model.load_state_dict(torch.load(weights_file))
+model.eval()
 
 imagePaths = paths.words_source_RIMES
 # Get the labels from the yolov3.txt file
 labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ' ', '!', '"', '#', '&', "'", '(', ')', '*', '+', ',', '-', '.', '/', ':', ';', '?']
 
-# Load YOLOv3 model
-net = cv2.dnn.readNet("yolo.weights", "yolo.cfg")
-
 # Function to get bounding boxes and detected classes
 def get_objects(image):
     height, width, _ = image.shape
 
-    # Preprocess the image for YOLO
-    blob = cv2.dnn.blobFromImage(image, 1/255.0, (416, 416), swapRB=True, crop=False)
-    net.setInput(blob)
+    # Convert image to PyTorch tensor
+    image_tensor = torch.from_numpy(image).unsqueeze(0).permute(0, 3, 1, 2).float()
 
-    # Get output layers
-    output_layers_names = net.getUnconnectedOutLayersNames()
-    layer_outputs = net.forward(output_layers_names)
-
+    # Perform inference
+    with torch.no_grad():
+        outputs = model(image_tensor)
+    
     boxes = []
     confidences = []
     class_ids = []
 
-    for output in layer_outputs:
-        for detection in output:
-            scores = detection[5:]
-            class_id = np.argmax(scores)
+    for detection in outputs:
+        for obj in detection:
+            scores = obj[5:]
+            class_id = torch.argmax(scores)
             confidence = scores[class_id]
             if confidence > 0.5:
-                center_x, center_y, w, h = (detection[0:4] * np.array([width, height, width, height])).astype(int)
-                x, y = int(center_x - w/2), int(center_y - h/2)
-                boxes.append([x, y, int(w), int(h)])
+                center_x = int(obj[0] * width)
+                center_y = int(obj[1] * height)
+                w = int(obj[2] * width)
+                h = int(obj[3] * height)
+                x = center_x - w // 2
+                y = center_y - h // 2
+                boxes.append([x, y, w, h])
                 confidences.append(float(confidence))
-                class_ids.append(class_id)
+                class_ids.append(int(class_id))
 
     return boxes, confidences, class_ids
 
