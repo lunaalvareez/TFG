@@ -6,19 +6,32 @@ import GlobalConstants as paths
 
 
 compressed_image_path = paths.source + "wordsCompressed"
-transcription_path = paths.words_transcription_RIMES
-# xml_file_path = paths.source + "xml"
+xml_file_path = paths.source + "xml"
 buffer = 0.1
 
 
 
-def extract_word_data(text_file):
-    idl = text_file.name
+def extract_word_data(xml_file):
+    idl = []
     textl = []
-    file = open(text_file)
-    for line in file:
-            textl.append(line)
+    try:
+        tree = ET.parse(xml_file)
+        root = tree.getroot()
+        words = root.findall('.//word')
+        for word in words:
+            word_id = word.attrib.get('id')
+            word_text = word.attrib.get('text')
+            if word_id and word_text:
+                #print(f"File: {os.path.basename(xml_file)}, ID: {word_id}, Text: {word_text}")
+                idl.append(word_id)
+                textl.append(word_text)
+            else:
+                print(f"Missing data in {os.path.basename(xml_file)}")
+    except ET.ParseError as e:
+        print(f"Error parsing {xml_file}: {e}")
     return idl,textl
+
+
 
 
 
@@ -74,9 +87,9 @@ yolo_classes = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
 
 
 
-for filename in os.listdir(transcription_path):
+for filename in os.listdir(xml_file_path):
     if filename.endswith('.xml'):
-        file_path = os.path.join(transcription_path, filename)
+        file_path = os.path.join(xml_file_path, filename)
         idl, textl = extract_word_data(file_path)
 
         for i, id in enumerate(idl):
