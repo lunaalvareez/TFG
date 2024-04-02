@@ -5,7 +5,7 @@ import shutil
 import GlobalConstants as paths
 
 # Define the source and destination directories
-source_dir = paths.words_source_RIMES #From IAMHandwriting website
+source_dir = paths.words_source_RIMES #From RIMES dataset
 destination_dir = paths.source + "wordsCompressed" #Destination
 
 
