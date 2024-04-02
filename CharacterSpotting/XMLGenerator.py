@@ -52,6 +52,7 @@ for filename in os.listdir(transcription_dir):
 
         dom = xml.dom.minidom.parseString(xml_str)
         pretty_xml_str = dom.toprettyxml(indent="   ")
+        pretty_xml_str = pretty_xml_str.replace('<?xml version="1.0" ?>', '', 1)
 
         # Write the XML tree in a file
         xml_path = os.path.join(xml_dir, id+".xml")
