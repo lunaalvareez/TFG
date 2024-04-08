@@ -1,6 +1,7 @@
 import os
 from ultralytics import YOLO
 import editdistance
+import GlobalConstants as paths
 ##Boxes to text + WER
 
 def compare_words(prediction_word,label_word):
@@ -39,6 +40,7 @@ def sort_by_x(prediction_list):
 def x_to_text(predictions_list):
     text = ""
     for predictions in predictions_list:
+        print(predictions["class_num"])
         text += " " + model.names[int(predictions["class_num"])]
     return text
 
@@ -115,8 +117,8 @@ def calculate_IOU(prediction1, prediction2): #Not the greatest calculation but i
 confidence_threshold=0.45
 IOU_threshold = 0.2
 
-comparisonFiles_path = "/Users/ludvig/LTU/Characterspotting9/trainEvalSet"
-weights_path = "/Users/ludvig/LTU/Characterspotting9/best_1.pt" #To get "model.names" Change this to the list of indexes instead.
+comparisonFiles_path = paths.source + "wordsCompressed"
+weights_path = "best_1.pt" #To get "model.names" Change this to the list of indexes instead.
 model = YOLO(weights_path)
 
 correct_words = 0
