@@ -44,7 +44,8 @@ for filename in os.listdir(transcription_dir):
             for j, word_text in enumerate(words, start=0):
                 word = ET.SubElement(line, "word")
                 word.set("id", f"{id}-{i:02}-{j:02}")
-                word.set("text", word_text)
+                word_text_correct = word_text.replace('¤', '')
+                word.set("text", word_text_correct)
 
         # Create the XML tree
         tree = ET.ElementTree(form)
