@@ -9,8 +9,8 @@ count_img = 0
 count_ann = 0
 
 # Creating Image/Annotation pairs
-image_files = [f for f in os.listdir(wordsCompressed_path) if f.endswith('.png')]
-pairs = [(img, img.replace('.png', '.txt')) for img in image_files if os.path.exists(os.path.join(wordsCompressed_path, img.replace('.png', '.txt')))]
+image_files = [f for f in os.listdir(wordsCompressed_path) if f.endswith('.jpg')]
+pairs = [(img, img.replace('.jpg', '.txt')) for img in image_files if os.path.exists(os.path.join(wordsCompressed_path, img.replace('.jpg', '.txt')))]
 
 
 for img_file in pairs:
