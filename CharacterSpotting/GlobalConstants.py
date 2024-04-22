@@ -1,6 +1,6 @@
 source = ""
-words_source_RIMES = "../../Data/RIMES/Images/Eval"
-words_transcription_RIMES = "../../Data/RIMES/Transcriptions/Eval"
+words_source_RIMES = "../../Data/RIMES/RIMES-2011-Lines/Images"
+words_transcription_RIMES = "../../Data/RIMES/RIMES-2011-Lines/Transciptions"
 words_source_phcd = "../../Data/phcd/Images"
 words_source_Rodrigo = "../../Data/Rodrigo/Images"
 words_source_VNOnDB = "../../Data/VNonDB/Images"
