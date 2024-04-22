@@ -35,20 +35,10 @@ random.shuffle(trainEvalSet_files)  #Randomize selection
 train_files = trainEvalSet_files[:1600]
 val_files = trainEvalSet_files[1600:2000]
 
-#formats file paths for drive and local
-#train_files_cloud = format_paths_cloud(train_files, trainEvalSet_new_base_path)
-#val_files_cloud = format_paths_cloud(val_files, trainEvalSet_new_base_path)
-#test_files_cloud = format_paths_cloud(testSet_files, testSet_new_base_path)
-
-#drive path files
-#write_to_file(os.path.join(txts_path, "train.txt"), train_files_cloud)
-#write_to_file(os.path.join(txts_path, "val.txt"), val_files_cloud)
-#rite_to_file(os.path.join(txts_path, "test.txt"), test_files_cloud)
-
 #local path files
-write_to_file(os.path.join(txts_path, "train_local.txt"), [os.path.join(trainEvalSet_original_path, f) for f in train_files])
-write_to_file(os.path.join(txts_path, "val_local.txt"), [os.path.join(trainEvalSet_original_path, f) for f in val_files])
-write_to_file(os.path.join(txts_path, "test_local.txt"), [os.path.join(testSet_original_path, f) for f in testSet_files])
+write_to_file(os.path.join(txts_path, "train.txt"), [os.path.join(trainEvalSet_original_path, f) for f in train_files])
+write_to_file(os.path.join(txts_path, "val.txt"), [os.path.join(trainEvalSet_original_path, f) for f in val_files])
+write_to_file(os.path.join(txts_path, "test.txt"), [os.path.join(testSet_original_path, f) for f in testSet_files])
 
 #name-only files
 write_to_file(os.path.join(txts_path, "train_names.txt"), train_files)
