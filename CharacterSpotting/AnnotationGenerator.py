@@ -43,27 +43,27 @@ def str_pixel_width_calculator(string_in):
 
         char = string_in[ii]
         #print(char)
-        if char in ['.', ',', "'", '°']:
+        if char in ['.', ',', "'", '°', '²']:
             letter_width = 8
         elif char in ["0","1","2","3","4","5","6","7","8","9"]:
             letter_width = 15
-        elif char in ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'K', 'L', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'X', 'Y', 'Z']:
+        elif char in ['A', 'À', 'Á', 'Â', 'B', 'C', 'Ç', 'D', 'E', 'É', 'È', 'È', 'Ë', 'F', 'G', 'H', 'K', 'L', 'N', 'O', 'Ó', 'Ò', 'Ô', 'P', 'Q', 'R', 'S', 'T', 'U', 'Ú', 'Ù', 'Û', 'Ü', 'V', 'X', 'Y', 'Z']:
             letter_width = 23
-        elif char in ['I', 'J', '-']:
+        elif char in ['I', 'Í', 'Ì', 'Î', 'J', '-']:
             letter_width = 15 
         elif char == 'M':
             letter_width = 26 
         elif char == 'W':
             letter_width = 39
-        elif char in ['a', 'à', 'á', 'â', 'b', 'c', 'ç', 'd', 'e', 'é', 'è', 'ê', 'g', 'h', 'k', 'n', 'o', 'ó', 'ò', 'ô', 'p', 'q', 's', 'u', 'ú', 'ù', 'û', 'v', 'x', 'y', 'z']:
+        elif char in ['a', 'à', 'á', 'â', 'b', 'c', 'ç', 'd', 'e', 'é', 'è', 'ê', 'ë', 'g', 'h', 'k', 'n', 'o', 'ó', 'ò', 'ô', 'p', 'q', 's', 'u', 'ú', 'ù', 'û', 'ü', 'v', 'x', 'y', 'z']:
             letter_width = 15  
-        elif char in ['i', 'î', 'l']:
+        elif char in ['i', 'í', 'ì', 'î', 'l']:
             letter_width = 8 
         elif char in ['r', 't', 'j', 'f']:
             letter_width = 12 
-        elif char in ['m', 'w']:
+        elif char in ['m', 'w', 'œ']:
             letter_width = 24 
-        elif char in [';', '!', '?', '(', ')', '"', ":", "&", "#", "*", " ", '/', "+", "€"]:
+        elif char in [';', '!', '?', '(', ')', '"', ":", "&", "#", "*", " ", '/', "+", "€", '{', '}', '%', '_', '=']:
             letter_width = 15
 
         char_widths[ii] = letter_width
@@ -83,7 +83,10 @@ def add_width_buffer(char_widths):
     return buffer_char_widths
 
 
-yolo_classes = ['a', 'à', 'á', 'â', 'b', 'c', 'ç', 'd', 'e', 'é', 'è', 'ê', 'f', 'g', 'h', 'i', 'î', 'j', 'k', 'l', 'm', 'n', 'o', 'ó', 'ò', 'ô', 'p', 'q', 'r', 's', 't', 'u', 'ú', 'ù', 'û', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ' ', '!', '"', '#', '&', "'", '(', ')', '*', '+', ',', '-', '.', '/', ':', ';', '?','€', '°']
+yolo_classes = ['a', 'à', 'á', 'â', 'b', 'c', 'ç', 'd', 'e', 'é', 'è', 'ê', 'ë', 'f', 'g', 'h', 'i', 'í', 'ì', 'î', 'j', 'k', 'l', 'm', 'n', 'o', 'ó', 'ò', 'ô', 'p', 'q', 'r', 's', 't', 'u', 'ú', 'ù', 'û', 'ü', 'v', 'w', 'x', 'y', 'z', 'œ', 
+                'A', 'À', 'Á', 'Â', 'B', 'C', 'Ç', 'D', 'E', 'É', 'È', 'È', 'Ë', 'F', 'G', 'H', 'I', 'Í', 'Ì', 'Î', 'J', 'K', 'L', 'M', 'N', 'O', 'Ó', 'Ò', 'Ô', 'P', 'Q', 'R', 'S', 'T', 'U', 'Ú', 'Ù', 'Û', 'Ü', 'V', 'W', 'X', 'Y', 'Z', 
+                '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ' ', 
+                '!', '"', '#', '&', "'", '(', ')', '*', '+', ',', '-','_', '.', '/', ':', ';', '?','€', '°', '²', '{', '}', '%', '=']
 
 
 
@@ -99,6 +102,7 @@ for filename in os.listdir(xml_file_path):
             picture_path = os.path.join(compressed_image_path, f"{path}.jpg")
 
             if os.path.exists(picture_path):
+                #print(id)
                 char_widths = str_pixel_width_calculator(text)
                 image = cv2.imread(picture_path)
                 char_widths_with_buffer = add_width_buffer(char_widths)
