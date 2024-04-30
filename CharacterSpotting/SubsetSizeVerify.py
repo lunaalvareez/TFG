@@ -4,7 +4,7 @@ import random
 import GlobalConstants as paths
 
 root = paths.source
-wordsCompressed_path = root + "wordsCompressedSubset40k/"
+wordsCompressed_path = root + "wordsCompressedSubset40K/"
 count_img = 0
 count_ann = 0
 

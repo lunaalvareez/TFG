@@ -3,7 +3,7 @@ import shutil
 import random
 import GlobalConstants as paths
 root = paths.source
-wordsCompressedSubset_path = root + "wordsCompressedSubset40k/"
+wordsCompressedSubset_path = root + "wordsCompressedSubset40K/"
 trainEvalSet_path = root + "trainEvalSet"
 testSet_path = root + "testSet"
 trainset_list_path = os.path.join(root, "trainset.txt")
