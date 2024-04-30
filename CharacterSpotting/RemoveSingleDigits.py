@@ -21,7 +21,7 @@ for anno_file in annotation_files:
                 count_ann += 1
                 print(f"Removed annotation: {anno_file}")
                 #Removal of corresponding image file
-                img_file = anno_file.replace('.txt', '.png')
+                img_file = anno_file.replace('.txt', '.jpg')
                 img_path = os.path.join(wordsCompressed_path, img_file)
                 if os.path.exists(img_path):
                     os.remove(img_path)

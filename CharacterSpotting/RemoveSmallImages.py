@@ -9,7 +9,7 @@ count_ann = 0
 minsize = 10
 
 
-image_files = [f for f in os.listdir(wordsCompressed_path) if f.endswith('.png')] # List all image files
+image_files = [f for f in os.listdir(wordsCompressed_path) if f.endswith('.jpg')] # List all image files
 for img_file in image_files:
     img_path = os.path.join(wordsCompressed_path, img_file)
     
