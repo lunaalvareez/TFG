@@ -11,20 +11,20 @@ buffer = 0.1
 
 
 
-def extract_word_data(xml_file):
+def extract_line_data(xml_file):
     idl = []
     textl = []
     try:
         tree = ET.parse(xml_file)
         root = tree.getroot()
-        words = root.findall('.//word')
-        for word in words:
-            word_id = word.attrib.get('id')
-            word_text = word.attrib.get('text')
-            if word_id and word_text:
+        lines = root.findall('.//line')
+        for line in lines:
+            line_id = line.attrib.get('id')
+            line_text = line.attrib.get('text')
+            if line_id and line_text:
                 #print(f"File: {os.path.basename(xml_file)}, ID: {word_id}, Text: {word_text}")
-                idl.append(word_id)
-                textl.append(word_text)
+                idl.append(line_id)
+                textl.append(line_text)
             else:
                 print(f"Missing data in {os.path.basename(xml_file)}")
     except ET.ParseError as e:
@@ -93,12 +93,12 @@ yolo_classes = ['a', 'à', 'á', 'â', 'b', 'c', 'ç', 'd', 'e', 'é', 'è', 'ê
 for filename in os.listdir(xml_file_path):
     if filename.endswith('.xml'):
         file_path = os.path.join(xml_file_path, filename)
-        idl, textl = extract_word_data(file_path)
+        idl, textl = extract_line_data(file_path)
 
         for i, id in enumerate(idl):
             text = textl[i]
             path = id.split("-")
-            path = "-".join(path[:-2])
+            path = "-".join(path[:-1])
             picture_path = os.path.join(compressed_image_path, f"{path}.jpg")
 
             if os.path.exists(picture_path):

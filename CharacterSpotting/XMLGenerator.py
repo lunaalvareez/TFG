@@ -39,7 +39,8 @@ for filename in os.listdir(transcription_dir):
         for i, line_text in enumerate(lines, start=0):
             line = ET.SubElement(handwritten_part, "line")
             line.set("id", f"{id}-{i:02}")
-            line.set("text", line_text)
+            line_text_correct = line_text.replace('¤', '')
+            line.set("text", line_text_correct)
             words = line_text.split(" ")
             for j, word_text in enumerate(words, start=0):
                 word = ET.SubElement(line, "word")
