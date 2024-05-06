@@ -1,0 +1,12 @@
+- balancing data
+- padding images instead of resizing -> try rect=true and try padding
+- lower confidence
+- take out in diacritics
+- try to put diacritics apart
+
+
+document:
+- sum up what i did
+- errors (padding vs resizing)
+- what i wish someone had told me before starting
+- slideshow 

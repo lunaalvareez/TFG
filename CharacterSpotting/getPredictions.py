@@ -4,17 +4,17 @@ from ultralytics import YOLO
 from PIL import Image
 import GlobalConstants as paths
 
-wordsCompressedSubset40k_path = paths.source + "wordsCompressed"
-weights_path = "best_1.pt"
+testSet = paths.source + "testSet"
+weights_path = paths.best_model
 
 
 model = YOLO(weights_path)
 
 
-annotation_files = [f for f in os.listdir(wordsCompressedSubset40k_path) if f.endswith('.txt')]
+annotation_files = [f for f in os.listdir(testSet) if f.endswith('.txt')]
 
 for anno_file in annotation_files:
-    anno_path = os.path.join(wordsCompressedSubset40k_path, anno_file)
+    anno_path = os.path.join(testSet, anno_file)
     pred_path_temp = anno_path.split(".")
     pred_path = pred_path_temp[0] + "*." + pred_path_temp[1]
 
