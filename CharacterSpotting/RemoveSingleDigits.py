@@ -2,17 +2,17 @@ import os
 import GlobalConstants as paths
 
 root = paths.source
-wordsCompressed_path = root + "wordsCompressed/"
+sentencesCompressed_path = root + "sentencesCompressed/"
 count_img = 0
 count_ann = 0
 
 
 
 
-annotation_files = [f for f in os.listdir(wordsCompressed_path) if f.endswith('.txt')]
+annotation_files = [f for f in os.listdir(sentencesCompressed_path) if f.endswith('.txt')]
 
 for anno_file in annotation_files:
-    anno_path = os.path.join(wordsCompressed_path, anno_file)
+    anno_path = os.path.join(sentencesCompressed_path, anno_file)
     try:
         with open(anno_path, 'r') as file:
             lines = file.readlines()
@@ -22,7 +22,7 @@ for anno_file in annotation_files:
                 print(f"Removed annotation: {anno_file}")
                 #Removal of corresponding image file
                 img_file = anno_file.replace('.txt', '.jpg')
-                img_path = os.path.join(wordsCompressed_path, img_file)
+                img_path = os.path.join(sentencesCompressed_path, img_file)
                 if os.path.exists(img_path):
                     os.remove(img_path)
                     count_img += 1

@@ -5,7 +5,7 @@ import cv2
 import GlobalConstants as paths
 
 
-compressed_image_path = paths.source + "wordsCompressed"
+compressed_image_path = paths.source + "sentencesCompressed"
 xml_file_path = paths.source + "xml"
 buffer = 0.1
 

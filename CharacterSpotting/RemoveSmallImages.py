@@ -2,16 +2,16 @@ from PIL import Image
 import os
 import GlobalConstants as paths
 
-wordsCompressed_path = paths.source + "wordsCompressed/"
+sentencesCompressed_path = paths.source + "sentencesCompressed/"
 
 count_img = 0
 count_ann = 0
 minsize = 10
 
 
-image_files = [f for f in os.listdir(wordsCompressed_path) if f.endswith('.jpg')] # List all image files
+image_files = [f for f in os.listdir(sentencesCompressed_path) if f.endswith('.jpg')] # List all image files
 for img_file in image_files:
-    img_path = os.path.join(wordsCompressed_path, img_file)
+    img_path = os.path.join(sentencesCompressed_path, img_file)
     
     try:
         with Image.open(img_path) as img:
@@ -25,7 +25,7 @@ for img_file in image_files:
                 
                 # Identify and remove the corresponding annotation file
                 anno_file = img_file.replace('.png', '.txt')
-                anno_path = os.path.join(wordsCompressed_path, anno_file)
+                anno_path = os.path.join(sentencesCompressed_path, anno_file)
                 if os.path.exists(anno_path):
                     os.remove(anno_path)
                     #print(f"Removed annotation: {anno_file}")

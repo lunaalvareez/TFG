@@ -7,10 +7,6 @@ root = paths.source
 trainEvalSet_original_path = root + "trainEvalSet/"
 testSet_original_path = root + "testSet/"
 txts_path = root + "txts/"
-#For google drive. This is to be changed if you get errors in the Google Colab Notebook.
-#trainEvalSet_new_base_path = "/content/drive/MyDrive/Characterspotting/data/trainEvalSet/"
-#testSet_new_base_path = "/content/drive/MyDrive/Characterspotting/data/testSet/"
-
 
 os.makedirs(txts_path, exist_ok=True) #Check if dir exists
 

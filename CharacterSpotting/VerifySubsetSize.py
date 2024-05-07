@@ -4,13 +4,13 @@ import random
 import GlobalConstants as paths
 
 root = paths.source
-wordsCompressed_path = root + "wordsCompressedSubset40K/"
+sentencesCompressed_path = root + "sentencesCompressedSubset40K/"
 count_img = 0
 count_ann = 0
 
 # Creating Image/Annotation pairs
-image_files = [f for f in os.listdir(wordsCompressed_path) if f.endswith('.jpg')]
-pairs = [(img, img.replace('.jpg', '.txt')) for img in image_files if os.path.exists(os.path.join(wordsCompressed_path, img.replace('.jpg', '.txt')))]
+image_files = [f for f in os.listdir(sentencesCompressed_path) if f.endswith('.jpg')]
+pairs = [(img, img.replace('.jpg', '.txt')) for img in image_files if os.path.exists(os.path.join(sentencesCompressed_path, img.replace('.jpg', '.txt')))]
 
 
 for img_file in pairs:
