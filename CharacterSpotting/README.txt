@@ -14,7 +14,7 @@ Run:
 
 2. AddPadding.py: Now the images in /sentencesCompressed are padded to fit the final image size.
 
-3. AnnotationGenerator.py: Now the /sentencesCompressed should have annotation files accompanying each image. sentencesCompressed should have an approximate size of 1.8GB.
+3. AnnotationGenerator.py <--padded>: Now the /sentencesCompressed should have annotation files accompanying each image. If the images have been padded, the flag --padded should be added.
 
 4. Optional: RemoveSmallImages.py: Removes all images and annotation files with width or height smaller than 10 in /sentencesCompressed. Also removes images with errors being opened. Decreases /wordscompressed by 5%.
 
