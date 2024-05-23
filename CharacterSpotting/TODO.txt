@@ -10,3 +10,5 @@ document:
 - errors (padding vs resizing)
 - what i wish someone had told me before starting
 - slideshow 
+
+

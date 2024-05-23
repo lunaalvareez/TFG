@@ -1,0 +1,3 @@
+Atm rect=True gives better results than paddind
+
+Trying rect=true with balanced data

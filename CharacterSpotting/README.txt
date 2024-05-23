@@ -16,20 +16,19 @@ Run:
 
 3. AnnotationGenerator.py <--padded>: Now the /sentencesCompressed should have annotation files accompanying each image. If the images have been padded, the flag --padded should be added.
 
-4. Optional: RemoveSmallImages.py: Removes all images and annotation files with width or height smaller than 10 in /sentencesCompressed. Also removes images with errors being opened. Decreases /wordscompressed by 5%.
+4. BalanceData.py: If the data has been padded, the folder of origin would be sentencesCompressed and if the data is not padded, sentencesCompressedOriginal.
+                    The output folder will always be sentencesCompressed.
 
-5. Optional: RemoveSingleDigits.py: Removes all Images and annotation files with single digits in /sentencesCompressed. Decreases /sentencesCompressed by 11%.
+5. Optional: RemoveSmallImages.py: Removes all images and annotation files with width or height smaller than 10 in /sentencesCompressed. Also removes images with errors being opened. Decreases /wordscompressed by 5%.
 
-6. Subset40KGenerator.py: Now the /sentencesCompressedSubset40k should have 40k random images from /sentencesCompressed with accompanying annotation files. This folder should be able to be opened and inspected. Approximate size 444 MB
+6. Optional: RemoveSingleDigits.py: Removes all Images and annotation files with single digits in /sentencesCompressed. Decreases /sentencesCompressed by 11%.
 
-7. Optional: VerifySubsetSize.py: Verifies that the size is correct in /sentencesCompressedSubset40K
+7. TrainEvalTestSplit.py: Should split the /sentencesCompressedSubset40K into /trainEvalSet and /testSet. With approximate size /trainEvalset: 16.5 MB and /Testset: 428 MB.
 
-8. TrainEvalTestSplit.py: Should split the /sentencesCompressedSubset40K into /trainEvalSet and /testSet. With approximate size /trainEvalset: 16.5 MB and /Testset: 428 MB.
+8. TxtFileGenerator.py: Should create Eval.txt, Train.txt and Test.txt in /txts !!Important to read the comments and change directories based on your drive path to "/Characterspotting".
 
-9. TxtFileGenerator.py: Should create Eval.txt, Train.txt and Test.txt in /txts !!Important to read the comments and change directories based on your drive path to "/Characterspotting".
+9. ContaminationVerify.py: Make sure there are no common filenames between val, train and test.
 
-10. ContaminationVerify.py: Make sure there are no common filenames between val, train and test.
-
-11. Optional: Open "data_info.yaml" and change names, directories, nc(name count) etc as you see fit. Otherwise leave them as they are.
+10. Optional: Open "data_info.yaml" and change names, directories, nc(name count) etc as you see fit. Otherwise leave them as they are.
 
 

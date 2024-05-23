@@ -15,7 +15,7 @@ import re
 from collections import defaultdict
 import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from config_local import SEPARATED_C_DATA_DIR, SEPARATED_D_DATA_DIR
+# from config_local import SEPARATED_C_DATA_DIR, SEPARATED_D_DATA_DIR
 
 def remove_quotes(path):
     return re.sub(r'^[\'\"]|[\'\"]$', '', path)
@@ -27,11 +27,14 @@ def read_txt_file(file_path):
 def sample_folder(data_type_dir, min_obs, output_data_type_dir):
     print('Calculating sample distribution...')
     contains = defaultdict(list)
-    label_dir = os.path.join(data_type_dir, 'labels')
-    for txt_file in os.listdir(label_dir):
-        classes_in_file = read_txt_file(os.path.join(label_dir, txt_file))
+    # label_dir = os.path.join(data_type_dir, 'labels')
+    annotation_files = [f for f in os.listdir(data_type_dir) if f.endswith('.txt')]
+    for anno_file in annotation_files:
+        path = os.path.join(data_type_dir, anno_file)
+        classes_in_file = read_txt_file(path)
+        # print("classes in file: ", classes_in_file)
         for cls in set(classes_in_file):
-            contains[cls].append(txt_file)
+            contains[cls].append(anno_file)
     
     contains = dict(sorted(contains.items(), key=lambda item: len(item[1])))
     samples = []
@@ -52,7 +55,8 @@ def sample_folder(data_type_dir, min_obs, output_data_type_dir):
     # Count and print object class counts
     counts = defaultdict(int)
     for f in samples:
-        classes_in_file = read_txt_file(os.path.join(label_dir, f))
+        path = os.path.join(data_type_dir, f)
+        classes_in_file = read_txt_file(path)
         for cls in classes_in_file:
             counts[cls] += 1
 
@@ -62,17 +66,14 @@ def sample_folder(data_type_dir, min_obs, output_data_type_dir):
     
     user_input = input(f"Do you want to create the {data_type_dir.split('/')[-1]} dataset based on this sample? (y/n): ")
     if user_input.lower() == 'y':
-        os.makedirs(os.path.join(output_data_type_dir, 'images'))
-        os.makedirs(os.path.join(output_data_type_dir, 'labels'))
         print('Creating new dataset...')
         # Copy files to new dataset
         for f in set(samples):
             copy_count = samples.count(f)
             for i in range(copy_count):
                 suffix = f"_{i}" if i > 0 else ""
-                shutil.copy(os.path.join(label_dir, f), os.path.join(output_data_type_dir, 'labels', f"{f[:-4]}{suffix}.txt"))
-                shutil.copy(os.path.join(label_dir.replace('labels', 'images'), f"{f[:-4]}.tif"), 
-                            os.path.join(output_data_type_dir, 'images', f"{f[:-4]}{suffix}.tif"))
+                shutil.copy(os.path.join(data_type_dir, f), os.path.join(output_data_type_dir, f"{f[:-4]}{suffix}.txt"))
+                shutil.copy(os.path.join(data_type_dir, f"{f[:-4]}.jpg"), os.path.join(output_data_type_dir,f"{f[:-4]}{suffix}.jpg"))
         
         print(f"Dataset created at {output_data_type_dir}")
 

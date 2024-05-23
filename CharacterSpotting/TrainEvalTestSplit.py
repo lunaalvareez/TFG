@@ -3,7 +3,7 @@ import shutil
 import random
 import GlobalConstants as paths
 root = paths.source
-sentencesCompressedSubset_path = root + "sentencesCompressedSubset40K/"
+sentencesCompressedSubset_path = root + "sentencesCompressed/"
 trainEvalSet_path = root + "trainEvalSet"
 testSet_path = root + "testSet"
 trainset_list_path = os.path.join(root, "trainset.txt")
@@ -26,9 +26,9 @@ all_pairs = [(img, img.replace('.jpg', '.txt')) for img in all_image_files if os
 
 trainset_pairs = [(img, img.replace('.jpg', '.txt')) for img in all_image_files if matches_identifier(img, trainset_identifiers) and os.path.exists(os.path.join(sentencesCompressedSubset_path, img.replace('.jpg', '.txt')))]#filter pairs based on identifiers in trainset.txt for potential inclusion in trainEvalSet
 
-selected_pairs_for_trainEvalSet = random.sample(trainset_pairs, min(2000, len(trainset_pairs))) #randomly select up to 2000 pairs from those matching the identifiers
+# selected_pairs_for_trainEvalSet = random.sample(trainset_pairs, min(2000, len(trainset_pairs))) #randomly select up to 2000 pairs from those matching the identifiers
 
-for img_file, anno_file in selected_pairs_for_trainEvalSet: #copy the selected pairs to trainEvalSet
+for img_file, anno_file in trainset_pairs: #copy the selected pairs to trainEvalSet
     shutil.copy(os.path.join(sentencesCompressedSubset_path, img_file), os.path.join(trainEvalSet_path, img_file))
     shutil.copy(os.path.join(sentencesCompressedSubset_path, anno_file), os.path.join(trainEvalSet_path, anno_file))
 
@@ -44,5 +44,5 @@ for img_file, anno_file in selected_pairs_for_testSet: #copy the selected pairs 
     shutil.copy(os.path.join(sentencesCompressedSubset_path, img_file), os.path.join(testSet_path, img_file))
     shutil.copy(os.path.join(sentencesCompressedSubset_path, anno_file), os.path.join(testSet_path, anno_file))
 
-print(f"Total {len(selected_pairs_for_trainEvalSet)} image-annotation pairs have been copied to trainEvalSet.")
+print(f"Total {len(trainset_pairs)} image-annotation pairs have been copied to trainEvalSet.")
 print(f"Total {len(selected_pairs_for_testSet)} image-annotation pairs have been copied to testset.")

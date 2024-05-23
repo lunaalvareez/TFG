@@ -97,14 +97,13 @@ def process_image(original_path, text, yolo_annotation_path, is_padded=False, pa
     char_positions = [0] + [sum(char_widths[:j]) for j in range(1, len(char_widths))]
     original_image = cv2.imread(original_path)
 
-
     if is_padded and padded_path:
         padded_image = cv2.imread(padded_path)
         sentence_height_ratio = original_image.shape[0] / padded_image.shape[0]
         y_center = sentence_height_ratio / 2
     else:
-        compressed_image_path = os.path.join(sentencesCompressed, os.path.basename(original_path))
-        cv2.imwrite(compressed_image_path, original_image)
+        # compressed_image_path = os.path.join(sentencesCompressed, os.path.basename(original_path))
+        # cv2.imwrite(compressed_image_path, original_image)
         y_center = 0.5
 
     with open(yolo_annotation_path, "a") as yolo_annotation_file:
@@ -127,15 +126,15 @@ for filename in os.listdir(xml_file_path):
             original_path = os.path.join(sentencesCompressedOriginal, f"{path}.jpg")
 
             if os.path.exists(original_path):
-                yolo_annotation_path = original_path.replace(".jpg", ".txt")
-
                 if args.padded:
                     padded_path = os.path.join(sentencesCompressed, f"{path}.jpg")
                     if os.path.exists(padded_path):
+                        yolo_annotation_path = padded_path.replace(".jpg", ".txt")
                         process_image(original_path, text, yolo_annotation_path, is_padded=True, padded_path=padded_path)
                     else:
                         print(f"Could not read image: {padded_path}")
                 else:
+                    yolo_annotation_path = original_path.replace(".jpg", ".txt")
                     process_image(original_path, text, yolo_annotation_path)
             else:
                 print(f"Could not read image: {original_path}")
