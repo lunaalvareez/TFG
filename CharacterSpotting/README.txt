@@ -16,7 +16,7 @@ Run:
 
 3. AnnotationGenerator.py <--padded>: Now the /sentencesCompressed should have annotation files accompanying each image. If the images have been padded, the flag --padded should be added.
 
-4. BalanceData.py: If the data has been padded, the folder of origin would be sentencesCompressed and if the data is not padded, sentencesCompressedOriginal.
+4. BalanceData.py: If the data has been padded, the folder of origin would be sentencesCompressedPadded and if the data is not padded, sentencesCompressedOriginal.
                     The output folder will always be sentencesCompressed.
 
 5. Optional: RemoveSmallImages.py: Removes all images and annotation files with width or height smaller than 10 in /sentencesCompressed. Also removes images with errors being opened. Decreases /wordscompressed by 5%.

@@ -6,7 +6,7 @@ import cv2
 import GlobalConstants as paths
 
 sentencesCompressedOriginal = paths.source + "sentencesCompressedOriginal"
-sentencesCompressed = paths.source + "sentencesCompressed"
+sentencesCompressedPadded = paths.source + "sentencesCompressedPadded"
 xml_file_path = paths.source + "xml"
 buffer = 0.1
 
@@ -127,7 +127,7 @@ for filename in os.listdir(xml_file_path):
 
             if os.path.exists(original_path):
                 if args.padded:
-                    padded_path = os.path.join(sentencesCompressed, f"{path}.jpg")
+                    padded_path = os.path.join(sentencesCompressedPadded, f"{path}.jpg")
                     if os.path.exists(padded_path):
                         yolo_annotation_path = padded_path.replace(".jpg", ".txt")
                         process_image(original_path, text, yolo_annotation_path, is_padded=True, padded_path=padded_path)

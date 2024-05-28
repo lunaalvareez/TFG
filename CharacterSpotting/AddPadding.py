@@ -3,7 +3,7 @@ import os
 import GlobalConstants as paths
 
 sentencesCompressedOriginal = paths.source + "sentencesCompressedOriginal"
-sentencesCompressed = paths.source + "sentencesCompressed"
+sentencesCompressedPadded = paths.source + "sentencesCompressedPadded"
 
 def resize_and_pad_image(image, target_size):
     # Calculate the aspect ratio of the original image
@@ -35,7 +35,7 @@ target_size = (1080,1080)
 for filename in os.listdir(sentencesCompressedOriginal):
     if filename.endswith(".jpg"):  # check if the file is an image
         image_path = os.path.join(sentencesCompressedOriginal, filename)
-        padded_path = os.path.join(sentencesCompressed, filename)
+        padded_path = os.path.join(sentencesCompressedPadded, filename)
         image = cv2.imread(image_path)
         padded_image = resize_and_pad_image(image, target_size)
         cv2.imwrite(padded_path, padded_image)  # overwrite the original image with the padded image
