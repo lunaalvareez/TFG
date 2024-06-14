@@ -12,9 +12,9 @@ Before each run. Make sure to read the comments and change the paths as necessar
 Run:
 1. Compressor.py: and make sure /sentencesCompressedOriginal is filled with around 1.6GB. If you can open the folder and look through that's good but it's not needed if it's not possible.
 
-2. AddPadding.py: Now the images in /sentencesCompressed are padded to fit the final image size.
+2. AddPadding.py: Now the images in /sentencesCompressedPadded are padded to fit the final image size.
 
-3. AnnotationGenerator.py <--padded>: Now the /sentencesCompressed should have annotation files accompanying each image. If the images have been padded, the flag --padded should be added.
+3. AnnotationGenerator.py <--padded>: Now the /sentencesCompressedOriginal (or /sentencesCompressedPadded) should have annotation files accompanying each image. If the images have been padded, the flag --padded should be added.
 
 4. BalanceData.py: If the data has been padded, the folder of origin would be sentencesCompressedPadded and if the data is not padded, sentencesCompressedOriginal.
                     The output folder will always be sentencesCompressed.

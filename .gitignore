@@ -1,0 +1,5 @@
+# Ignore all pictures
+CharacterSpotting/sentencesCompressedOriginal/
+CharacterSpotting/sentencesCompressed/
+CharacterSpotting/sentencesCompressedSubset40K/
+CharacterSpotting/sentencesCompressedPadded
