@@ -4,7 +4,7 @@ Training:
 
 Create main folder "Characterspotting" on your computer.
 
-Create the subfolders "/sentencesCompressedOriginal", "/sentencesCompressedPadded", /sentencesCompressed, "/sentencesCompressedSubset40K", "/txts", "/trainEvalSet", "/testSet"
+Create the subfolders "/sentencesCompressedOriginal", /sentencesCompressed, "/sentencesCompressedSubset40K", "/txts", "/trainEvalSet", "/testSet"
 
 Get "words", "xml", "trainset.txt" from IAMHandwriting dataset. Place them in your root directory (/Characterspotting)
 

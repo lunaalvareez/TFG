@@ -3,3 +3,7 @@ CharacterSpotting/sentencesCompressedOriginal/
 CharacterSpotting/sentencesCompressed/
 CharacterSpotting/sentencesCompressedSubset40K/
 CharacterSpotting/sentencesCompressedPadded
+CharacterSpotting/testSet/
+CharacterSpotting/trainEvalSet/
+CharacterSpotting/xml/
+CharacterSpotting/txts/
