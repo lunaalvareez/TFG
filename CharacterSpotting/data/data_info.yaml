@@ -123,7 +123,7 @@ names:
   121: "}"
   122: "%"
   123: "="
-path: "/home/jovyan/TFG/CharacterSpotting/txts/trainEvalSet"
-train: "/home/jovyan/TFG/CharacterSpotting/txts/train.txt"
-val: "/home/jovyan/TFG/CharacterSpotting/txts/val.txt"
+path: "C:/Users/lunal/Desktop/TFG/TFG/CharacterSpotting/txts/trainEvalSet"
+train: "C:/Users/lunal/Desktop/TFG/TFG/CharacterSpotting/txts/train.txt"
+val: "C:/Users/lunal/Desktop/TFG/TFG/CharacterSpotting/txts/val.txt"
 nc: 124
