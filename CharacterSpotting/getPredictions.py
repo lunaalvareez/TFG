@@ -27,7 +27,7 @@ for anno_file in annotation_files:
 
     for result in results:
         boxes = result.boxes.cpu().numpy()
-        for box in boxes: ##Not quite sure if this is the right structure. I will test with Kubernetes later.
+        for box in boxes: 
             cls = int(box.cls[0])
             # class_name = model.names[cls]
             conf = box.conf[0]
