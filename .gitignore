@@ -10,3 +10,5 @@ CharacterSpotting/txts/
 CharacterSpotting/runs/
 CharacterSpotting/trainEvalSet/
 CharacterSpotting/txts/
+CharacterSpotting/_pycache_/
+CharacterSpotting/.ipynb_checkpoints/
