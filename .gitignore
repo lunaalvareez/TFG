@@ -7,4 +7,5 @@ CharacterSpotting/testSet/
 CharacterSpotting/trainEvalSet/
 CharacterSpotting/xml/
 CharacterSpotting/txts/
-runs/
+CharacterSpotting/runs/
+CharacterSpotting/trainEvalSet/
