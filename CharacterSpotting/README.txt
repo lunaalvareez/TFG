@@ -1,4 +1,4 @@
-
+In the GlobalConstants.py file adjust the paths accordingly to you directories.
 
 Training:
 
@@ -31,4 +31,12 @@ Run:
 
 10. Optional: Open "data_info.yaml" and change names, directories, nc(name count) etc as you see fit. Otherwise leave them as they are.
 
+11. Train.ipynb: the result of the run will be saved in run/detect
+
+Testing:
+
+1. Getpredictions.py: creates in the testSet folder another file with the predictions.
+                        This folder will contain for each image an annotation file and a prediction file.
+
+2. WerCer.py: return the WER(word error rate) and the CER(character error rate) for the test images.
 
