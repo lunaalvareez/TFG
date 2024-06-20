@@ -1,8 +1,8 @@
 import os
 from ultralytics import YOLO
 import editdistance
-import GlobalConstants as paths
 ##Boxes to text + WER
+#AnvÃ¤nd denna!!!!
 
 def compare_words(prediction_word,label_word):
     if prediction_word == label_word:
@@ -12,7 +12,7 @@ def compare_words(prediction_word,label_word):
 
 def calc_cer(prediction_word,label_word):
     distance = editdistance.eval(label_word,prediction_word)
-    cer = distance / len(label_word)
+    cer = distance
 
     return cer
 
@@ -40,7 +40,6 @@ def sort_by_x(prediction_list):
 def x_to_text(predictions_list):
     text = ""
     for predictions in predictions_list:
-        print(predictions["class_num"])
         text += " " + model.names[int(predictions["class_num"])]
     return text
 
@@ -51,30 +50,19 @@ def remove_low_confidence(predictions_list):
             predictions_list.remove(predictions_list[i])
     return predictions_list
 
-# def remove_high_IOU(predictions_list): #Compares each box with eachother. However right now it adds them to this list even if they are deemed not good enough.
-#     new_predictions_list = []
-#     for i in range(len(predictions_list)):
-#         for k in range(len(predictions_list)):
-#             if calculate_IOU(predictions_list[i],predictions_list[k]) < IOU_threshold:
-#                 if(predictions_list[i]["conf"] < predictions_list[k]["conf"]):
-#                     if(predictions_list[k] not in new_predictions_list):
-#                         new_predictions_list.append(predictions_list[k])
-#                 else:
-#                     if(predictions_list[i] not in new_predictions_list):
-#                         new_predictions_list.append(predictions_list[i])
-#     return new_predictions_list
 
-def remove_high_IOU(predictions_list): #Compares each box with the box to the right
-    new_predictions_list = []
-    for i in range(len(predictions_list)-1):
-        if calculate_IOU(predictions_list[i],predictions_list[i+1]) < IOU_threshold:
-            if(predictions_list[i]["conf"] < predictions_list[i+1]["conf"]):
-                if(predictions_list[i+1] not in new_predictions_list):
-                    new_predictions_list.append(predictions_list[i+1])
-            else:
-                if(predictions_list[i] not in new_predictions_list):
-                    new_predictions_list.append(predictions_list[i])
-    return new_predictions_list
+def nms(predictions_list, iou_threshold):
+    predictions_list = sorted(predictions_list, key=lambda x: float(x['conf']), reverse=True)
+    keep = []
+    
+    while predictions_list:
+        current = predictions_list.pop(0)
+        keep.append(current)
+        predictions_list = [box for box in predictions_list if calculate_IOU(current, box) < iou_threshold]
+
+    return keep
+
+
 
 
 
@@ -114,11 +102,11 @@ def calculate_IOU(prediction1, prediction2): #Not the greatest calculation but i
 
         
         
-confidence_threshold=0.45
-IOU_threshold = 0.2
+confidence_threshold = 0.3
+IOU_threshold = 0.1
 
-comparisonFiles_path = paths.source + "wordsCompressed"
-weights_path = "best_1.pt" #To get "model.names" Change this to the list of indexes instead.
+comparisonFiles_path = "/Users/ludvig/LTU/Characterspotting11/testSet_xSmallimg"
+weights_path = "/Users/ludvig/LTU/Characterspotting9/best_1.pt" #To get "model.names" Change this to the list of indexes instead.
 model = YOLO(weights_path)
 
 correct_words = 0
@@ -142,13 +130,14 @@ for anno_file in annotation_files:
     with open(anno_path, 'r') as file:
         labels = file.readlines()
     label_list = list_format(labels)
-
+    ##Prediction augmentation
     predictions_list = sort_by_x(predictions_list)
     predictions_list = remove_low_confidence(predictions_list)
     predictions_list = sort_by_x(predictions_list)
-    # predictions_list = remove_high_IOU(predictions_list)
-    # predictions_list = sort_by_x(predictions_list)
-
+    predictions_list = nms(predictions_list,IOU_threshold)
+    predictions_list = sort_by_x(predictions_list)
+    
+    ##Prediction result
     pred_word = x_to_text(predictions_list).replace(" ","")
     ground_word = x_to_text(label_list).replace(" ","")
 
@@ -156,7 +145,6 @@ for anno_file in annotation_files:
 
     #cer
     cer_individual = calc_cer(pred_word,ground_word)
-    # print(f"Ground: {ground_word}    Pred: {pred_word}    Cer:{cer_individual}")
     total_cer += cer_individual
     total_character_count += len(x_to_text(label_list))
 
@@ -170,13 +158,10 @@ for anno_file in annotation_files:
     if(incorrect_words%200 == 0):
         print(f"Correct words: {correct_words}")
         print(f"Incorrect words: {incorrect_words}")
+        print(f"WER: {incorrect_words/(correct_words+incorrect_words)}")
+        print(f"CER: {total_cer /total_character_count}")   
     
     
 
 print(f"WER: {incorrect_words/(correct_words+incorrect_words)}")
 print(f"CER: {total_cer /total_character_count}")
-       
-
-# print(f"After remove_high_IOU: {x_to_text(predictions_list)}                       IOU_threshold = {IOU_threshold}")
-
-
