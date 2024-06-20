@@ -1,6 +1,7 @@
 import os
 from ultralytics import YOLO
 import editdistance
+import GlobalConstants as paths
 ##Boxes to text + WER
 #AnvÃ¤nd denna!!!!
 
@@ -95,18 +96,12 @@ def calculate_IOU(prediction1, prediction2): #Not the greatest calculation but i
 
     return intersection_area / union_area
 
+  
+confidence_threshold = 0.2
+IOU_threshold = 0.2
 
-
-
-
-
-        
-        
-confidence_threshold = 0.3
-IOU_threshold = 0.1
-
-comparisonFiles_path = "/Users/ludvig/LTU/Characterspotting11/testSet_xSmallimg"
-weights_path = "/Users/ludvig/LTU/Characterspotting9/best_1.pt" #To get "model.names" Change this to the list of indexes instead.
+comparisonFiles_path = paths.source + "testSet"
+weights_path = paths.best_model #To get "model.names" Change this to the list of indexes instead.
 model = YOLO(weights_path)
 
 correct_words = 0
