@@ -18,9 +18,15 @@ weights_path = paths.best_model  # Doesn't have to be the same weights as the pr
 
 model = YOLO(weights_path)
 
-def draw_boxes(image_path, annotation_path, output_path):
-    # Convert to numpy array
+def draw_boxes(image_path, annotation_path, output_path, target_width):
+    
     image = Image.open(image_path)
+    original_width, original_height = image.size
+    aspect_ratio = original_width / original_height
+    target_height = int(target_width / aspect_ratio)
+    image = image.resize((target_width, target_height), Image.LANCZOS)
+
+    # Convert to numpy array
     image = np.array(image)
     width, height = image.shape[1], image.shape[0]
 
@@ -82,6 +88,6 @@ for anno_file in annotation_files:
         img_path = anno_path.replace(".txt", ".jpg")
 
     output_path = anno_path.replace(folder_name, test_folder_name).replace(".txt", ".jpg")
-    draw_boxes(img_path, anno_path, output_path)
+    draw_boxes(img_path, anno_path, output_path, 1080)
     
     print(output_path)
