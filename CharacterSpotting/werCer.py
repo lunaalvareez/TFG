@@ -18,7 +18,6 @@ def calc_cer(prediction_word,label_word):
     return cer
 
 
-
 def list_format(predictions):
     predictions_list = []
     for prediction in predictions:
@@ -35,70 +34,12 @@ def list_format(predictions):
     return predictions_list
 
 
-def sort_by_x(prediction_list):
-    return sorted(prediction_list, key=lambda box: float(box['x']))
-
 def x_to_text(predictions_list):
     text = ""
     for predictions in predictions_list:
         text += " " + model.names[int(predictions["class_num"])]
     return text
 
-def remove_low_confidence(predictions_list):
-    for i in range(len(predictions_list)-1,0,-1):
-        predictions = predictions_list[i]
-        if float(predictions["conf"]) < confidence_threshold:
-            predictions_list.remove(predictions_list[i])
-    return predictions_list
-
-
-def nms(predictions_list, iou_threshold):
-    predictions_list = sorted(predictions_list, key=lambda x: float(x['conf']), reverse=True)
-    keep = []
-    
-    while predictions_list:
-        current = predictions_list.pop(0)
-        keep.append(current)
-        predictions_list = [box for box in predictions_list if calculate_IOU(current, box) < iou_threshold]
-
-    return keep
-
-
-
-
-
-
-def xywh_to_x1y1x2y2(x,y,w,h): #Is it 1 in the top for y or at the bottom? This proposes at the top.
-    x1 = float(x) - float(w)/2
-    x2 = x1 + float(w)
-    y1 = float(y) + float(h)/2
-    y2 = y1 - float(h)
-    return [x1,y1,x2,y2]
-
-
-def calculate_IOU(prediction1, prediction2): #Not the greatest calculation but it should work
-    box1 = xywh_to_x1y1x2y2(prediction1["x"],prediction1["y"],prediction1["w"],prediction1["h"])
-    box2 = xywh_to_x1y1x2y2(prediction2["x"],prediction2["y"],prediction2["w"],prediction2["h"])
-    #union
-    leftmost_x = min(box1[0],box2[0])
-    rightmost_x = max(box1[2],box2[2])
-    upper_y = max(box1[1],box2[1])
-    lower_y = min(box1[3],box2[3])
-    union_area = (rightmost_x - leftmost_x) * (upper_y - lower_y)
-    #intersection
-    intersection_x1 = max(box1[0],box2[0]) #left side of intersection area
-    intersection_y1 = min(box1[1],box2[1]) #upperside of intersection area
-    intersection_x2 = min(box1[2],box2[2]) #right side of intersection area
-    intersection_y2 = max(box1[0],box2[0]) #lower side of intersection area
-    intersection_area = (intersection_x2 - intersection_x1) * (intersection_y1 - intersection_y2)
-    # print(str(prediction1["class_num"]) + "     " + str(prediction2["class_num"]))
-    # print(intersection_area / union_area)
-
-    return intersection_area / union_area
-
-  
-confidence_threshold = 0.2
-IOU_threshold = 0.2
 
 comparisonFiles_path = paths.source + "testSet"
 weights_path = paths.best_model #To get "model.names" Change this to the list of indexes instead.
@@ -125,12 +66,6 @@ for anno_file in annotation_files:
     with open(anno_path, 'r') as file:
         labels = file.readlines()
     label_list = list_format(labels)
-    ##Prediction augmentation
-    predictions_list = sort_by_x(predictions_list)
-    predictions_list = remove_low_confidence(predictions_list)
-    predictions_list = sort_by_x(predictions_list)
-    predictions_list = nms(predictions_list,IOU_threshold)
-    predictions_list = sort_by_x(predictions_list)
     
     ##Prediction result
     pred_word = x_to_text(predictions_list).replace(" ","")
